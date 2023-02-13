@@ -1,0 +1,9 @@
+databaseBackup.*
+.DS_Store
+*.zip
+*.pyc
+*.db
+*.db-shm
+*.db-wal
+__pycache__
+settings.json
