@@ -1,0 +1,34 @@
+name: make-release
+
+on: 
+  push:
+    tags:
+    - '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: |
+        cd ${{ github.workspace }}
+        cd normalize-plex-files
+        zip -r ../normalize-plex-files.zip *
+        (echo '#!/usr/bin/env python3'; cat ../normalize-plex-files.zip)> ../normalize-plex-files
+
+    - name: test archiving
+      uses: actions/upload-artifact@v3
+      with:
+        name: zipped-versions
+        path: |
+          normalize-plex-files.zip
+          normalize-plex-files
+
+#    - uses: ncipollo/release-action@v1
+#      with:
+#        artifacts: "release.tar.gz,foo/*.txt"
+#        bodyFile: "body.md"
