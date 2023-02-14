@@ -23,13 +23,7 @@ jobs:
         (echo '#!/usr/bin/env python3'; cat normalize-plex-files.zip)> normalize-plex-files
         chmod a+rx normalize-plex-files
 
-    - name: test archiving
-      uses: actions/upload-artifact@v3
+    - uses: ncipollo/release-action@v1
       with:
-        name: executable-zips
-        path: bin
-
-#    - uses: ncipollo/release-action@v1
-#      with:
-#        artifacts: "release.tar.gz,foo/*.txt"
-#        bodyFile: "body.md"
+        draft: true
+        artifacts: "bin/normalize-plex-files,bin/normalize-plex-files.zip"
