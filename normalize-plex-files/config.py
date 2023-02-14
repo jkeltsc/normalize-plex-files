@@ -43,25 +43,25 @@ def getconfig() -> SimpleNamespace:
             ])
     except getopt.GetoptError as err:
         print(f"""
-    usage: normalize [--armed] [-d] [-D {{database}}] \\
-                     [-m] [-b {{moviedir}}] [-l {{libraryname}}] [-s {{#subdirs}}] [-o] \\
-                     [-t] [-B {{seriesdir}}] [-L {{libraryname}}] [-S {{#subdirs}}] [-O]
+usage: normalize [--armed] [-d] [-D {{database}}] \\
+                    [-m] [-b {{moviedir}}] [-l {{libraryname}}] [-s {{#subdirs}}] [-o] \\
+                    [-t] [-B {{seriesdir}}] [-L {{libraryname}}] [-S {{#subdirs}}] [-O]
 
-    Arguments and Environment Variables:
-             --armed                                     run armed, default: unarmed (no files touched)
-        -m | --movies                                    process movie files, default: do not process movies
-        -b | --moviesbase {{dir}}     PLEX_MOVIESBASE      movie files directory, env/default: {config.moviesbase}
-        -l | --movieslibrary {{name}} PLEX_MOVIESLIBRARY   movies library name, eenv/default: {config.movieslibrary}
-        -s | --moviessubdirs {{#}}    PLEX_MOVIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
-        -o | --ownmoviefolder       PLEX_OWNMOVIEFOLDER  pack each movie in its own movie folder, env/default: {config.ownmoviefolder}
-        -T | --tvseries                                  process tv series, default: do not process tv series
-        -B | --seriesbase {{dir}}     PLEX_SERIEESSBASE    series files directory, env/default: {config.seriesbase}
-        -L | --serieslibrary {{name}} PLEX_SERIESLIBRARY   series library name, env/default: {config.serieslibrary}
-        -S | --serieessubdirs {{#}}   PLEX_SERIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
-        -O | --ownseasonfolder      PLEX_OWNSERIESFOLDER pack each season in its own season folder, env/default: {config.ownseasonfolder}
-        -d | --debug                                     turn on debug messages, default: no debug messages
-        -D | --database {{file}}      PLEX_DATABASE        database file, env/default: {config.database}
-    """, file=sys.stderr)
+Arguments and Environment Variables:
+         --armed                                     run armed, default: unarmed (no files touched)
+    -m | --movies                                    process movie files, default: do not process movies
+    -b | --moviesbase {{dir}}     PLEX_MOVIESBASE      movie files directory, env/default: {config.moviesbase}
+    -l | --movieslibrary {{name}} PLEX_MOVIESLIBRARY   movies library name, eenv/default: {config.movieslibrary}
+    -s | --moviessubdirs {{#}}    PLEX_MOVIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
+    -o | --ownmoviefolder       PLEX_OWNMOVIEFOLDER  pack each movie in its own movie folder, env/default: {config.ownmoviefolder}
+    -T | --tvseries                                  process tv series, default: do not process tv series
+    -B | --seriesbase {{dir}}     PLEX_SERIEESSBASE    series files directory, env/default: {config.seriesbase}
+    -L | --serieslibrary {{name}} PLEX_SERIESLIBRARY   series library name, env/default: {config.serieslibrary}
+    -S | --serieessubdirs {{#}}   PLEX_SERIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
+    -O | --ownseasonfolder      PLEX_OWNSERIESFOLDER pack each season in its own season folder, env/default: {config.ownseasonfolder}
+    -d | --debug                                     turn on debug messages, default: no debug messages
+    -D | --database {{file}}      PLEX_DATABASE        database file, env/default: {config.database}
+""", file=sys.stderr)
         sys.exit(2)
 
     for o, a in opts:
