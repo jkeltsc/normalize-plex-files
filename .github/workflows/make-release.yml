@@ -40,5 +40,5 @@ jobs:
             - make it executable: `chmod a+rx normalize-plex-files`
             - run the executable: `./normalize-plex-files`
           ## Windows-like systems
-            - download the zip archive: `curl ${{ steps.release.outputs.html_url }}/normalize-plex-files.zip`
+            - download the zip archive: `curl ${{ steps.release.outputs.upload_url }}/normalize-plex-files.zip`
             - run the zip archive: `python3 normalize-plex-files.zip`
