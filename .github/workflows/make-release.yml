@@ -16,19 +16,18 @@ jobs:
 
     - run: |
         cd ${{ github.workspace }}
-        mkdir zipped
+        mkdir bin
         cd normalize-plex-files
-        zip -r ../zipped/normalize-plex-files.zip *
-        cd ../zipped
+        zip -r ../bin/normalize-plex-files.zip *
+        cd ../bin
         (echo '#!/usr/bin/env python3'; cat normalize-plex-files.zip)> normalize-plex-files
+        chmod a+rx normalize-plex-files
 
     - name: test archiving
       uses: actions/upload-artifact@v3
       with:
-        name: zipped-versions
-        path: |
-          zipped/normalize-plex-files.zip
-          zipped/normalize-plex-files
+        name: executable-zips
+        path: bin
 
 #    - uses: ncipollo/release-action@v1
 #      with:
