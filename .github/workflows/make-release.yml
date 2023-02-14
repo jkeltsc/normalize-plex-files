@@ -27,3 +27,9 @@ jobs:
       with:
         draft: true
         artifacts: "bin/normalize-plex-files,bin/normalize-plex-files.zip"
+        body: |
+          - use `normalize-plex-files` on Linux/UNIX-like systems:
+            - after download, run `chmod a+rx normalize-plex-files`
+            - to run, start `normalize-plex-files`
+          - use `normalize-plex-files.zip` on Windows-like systems:
+            - to run, start `python3 normalize-plex-files.zip`
