@@ -28,17 +28,13 @@ jobs:
       with:
         draft: true
         artifacts: "bin/normalize-plex-files,bin/normalize-plex-files.zip"
-
-    - uses: ncipollo/release-action@v1
-      with:
-        draft: true
-        allowUpdates: true
         body: |
           # Downloadable files
           ## Linux/UNIX-like Systems
-            - download the executable: `curl ${{ steps.release.outputs.html_url }}/normalize-plex-files`
+            - download `normalize-plex-files` from the list of assets below.
             - make it executable: `chmod a+rx normalize-plex-files`
             - run the executable: `./normalize-plex-files`
           ## Windows-like systems
-            - download the zip archive: `curl ${{ steps.release.outputs.upload_url }}/normalize-plex-files.zip`
+            - download the zip archive `normalize-plex-files.zip` from the list of assets below.
             - run the zip archive: `python3 normalize-plex-files.zip`
+
