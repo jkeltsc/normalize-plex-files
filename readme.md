@@ -260,7 +260,7 @@ You can directlty process the files using the SQLite3 commandline tool.
 Be sure to replace the database path, movie section name and series section name with your values.
 
 ~~~
-% sqlite3 /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db
+% sqlite3 '/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db'
 SQLite version 3.39.5 2022-10-14 20:58:05
 Enter ".help" for usage hints.
 sqlite> .parameter set :movies_section_name "'Filme'"
@@ -268,7 +268,7 @@ sqlite> .read normalize-plex-files/sqlsearchmovies.py
 ~~~
 
 ~~~
-% sqlite3 /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db
+% sqlite3 '/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db'
 SQLite version 3.39.5 2022-10-14 20:58:05
 Enter ".help" for usage hints.
 sqlite> .parameter set :series_section_name "'Serien'"
