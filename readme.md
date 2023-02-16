@@ -22,7 +22,7 @@
 
 
 # 1. Rationale
-This is a small python application that normalizes the filenames in your [Plex](app.plex.tv) media library after [Plex](app.plex.tv) has scraped your files and downloaded corresponding metadata, and after you manually corrected some possibly midguides matches in [Plex](app.plex.tv).
+This is a tiny python application that normalizes the filenames in your [Plex](app.plex.tv) media library after [Plex](app.plex.tv) has scraped your files and downloaded corresponding metadata, and after you manually corrected some possibly midguides matches in [Plex](app.plex.tv).
 
 The idea is that - **after [Plex](app.plex.tv) has matched your files** - this application renames the files coherently with the data [Plex](app.plex.tv) has found in [IMDB](https://www.imdb.com/), [TMDB](https://www.themoviedb.org/), or [TVDB](https://thetvdb.com/) databases. This has two advantages:
 - aesthetics: uniform filenames within your library
@@ -31,12 +31,12 @@ The idea is that - **after [Plex](app.plex.tv) has matched your files** - this a
 # 2. Installation
 ## 2.1. Linux/UNIX
 - Make sure you have `python3` installed and it's in your path.
-- Go to [Releases](./releases), open the assets, download `normalize-plex-files`
+- Go to [Releases](./releases), open the assets, download `normalize-plex-files`.
 - Make `normalize-plex-files` executable:
   ~~~
   chmod a+rx normalize-plex-files
   ~~~  
-- Run the app:
+- Run the application:
   ~~~
   ./normalize-plex-files
   ~~~  
@@ -45,8 +45,8 @@ The idea is that - **after [Plex](app.plex.tv) has matched your files** - this a
 ## 2.2. Windows
 The package has not been tested on Windows. Chances are good it works, though. To try your luck,
 - Make sure you have `python3` installed and it's in your path.
-- Go to [Releases](./releases), open the assets, download `normalize-plex-files.zip`
-- Run the app:
+- Go to [Releases](./releases), open the assets, download `normalize-plex-files.zip`.
+- Run the application:
   ~~~
   python3 normalize-plex-files.zip
   ~~~  

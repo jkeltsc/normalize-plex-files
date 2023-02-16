@@ -38,9 +38,9 @@ jobs:
         body: |
           # Downloadable files 
           ## Linux/UNIX-like Systems
-            - download [normalize-plex-files](${{ steps.draftrelease.outputs.html_url}}/../../download/${{ github.ref_name }}/normalize-plex-files) from the list of assets below.
+            - download [normalize-plex-files](${{ steps.draftrelease.outputs.html_url}}/../../download/${{ github.ref_name }}/normalize-plex-files).
             - make it executable: `chmod a+rx normalize-plex-files`
             - run the executable: `./normalize-plex-files`
           ## Windows-like systems
-            - download the zip archive [normalize-plex-files.zip](${{ steps.draftrelease.outputs.html_url}}/../../download/${{ github.ref_name }}/normalize-plex-files.zip) from the list of assets below.
+            - download the zip archive [normalize-plex-files.zip](${{ steps.draftrelease.outputs.html_url}}/../../download/${{ github.ref_name }}/normalize-plex-files.zip).
             - run the zip archive: `python3 normalize-plex-files.zip`
