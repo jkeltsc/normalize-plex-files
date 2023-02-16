@@ -8,7 +8,7 @@
             "name": "movies normalization",
             "type": "python",
             "request": "launch",
-            "program": "normalize.py",
+            "program": "normalize-plex-files",
             "args": [
                 "-m",
                 "-d",
@@ -22,7 +22,7 @@
             "name": "tvseries normalization",
             "type": "python",
             "request": "launch",
-            "program": "normalize.py",
+            "program": "normalize-plex-files",
             "args": [
                 "-T",
                 "-d",
