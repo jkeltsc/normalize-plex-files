@@ -80,10 +80,11 @@ Before you actually rename all your files and move them in place, you should che
 
 ## 3.3. Reorganize Your Files
 Check these conditions:
-- you are fine with the modifications `normalize-plex-files` would apply (see Preflight Checks in the previous section)
-- you have a backup with your current naming available
+- You are fine with the modifications `normalize-plex-files` would apply (see Preflight Checks in the previous section).
+- You are not running `normalize-plex-files` as a scheduled job (cron job), because then you would skip the pre-flight check (see previous section).
+- You have a current backup of all your files with your current naming scheme available.
 
-If both are true, then you may run `normalize-plex-files` in `--armed` mode to reorganize you media files:
+If all three are true, you may run `normalize-plex-files` in `--armed` mode to reorganize you media files:
 - To reorganize your movie files, run
   ~~~
   normalize-plex-files -m --armed
