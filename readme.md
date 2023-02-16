@@ -22,9 +22,9 @@
 
 
 # 1. Rationale
-This is a tiny python application that normalizes the filenames in your [Plex](app.plex.tv) media library after [Plex](app.plex.tv) has scraped your files and downloaded corresponding metadata, and after you manually corrected some possibly midguides matches in [Plex](app.plex.tv).
+This is a tiny python application that normalizes the filenames in your [Plex](https://app.plex.tv) media library after [Plex](https://app.plex.tv) has scraped your files and downloaded corresponding metadata, and after you manually corrected some possibly midguides matches in [Plex](https://app.plex.tv).
 
-The idea is that - **after [Plex](app.plex.tv) has matched your files** - this application renames the files coherently with the data [Plex](app.plex.tv) has found in [IMDB](https://www.imdb.com/), [TMDB](https://www.themoviedb.org/), or [TVDB](https://thetvdb.com/) databases. This has two advantages:
+The idea is that - **after [Plex](https://app.plex.tv) has matched your files** - this application renames the files coherently with the data [Plex](https://app.plex.tv) has found in [IMDB](https://www.imdb.com/), [TMDB](https://www.themoviedb.org/), or [TVDB](https://thetvdb.com/) databases. This has two advantages:
 - aesthetics: uniform filenames within your library
 - pragmatism: if you ever have to rebuild your library, all movies will be matched as they were before.
 
