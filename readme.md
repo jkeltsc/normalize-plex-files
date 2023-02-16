@@ -31,7 +31,7 @@ The idea is that - **after [Plex](app.plex.tv) has matched your files** - this a
 # 2. Installation
 ## 2.1. Linux/UNIX
 - Make sure you have `python3` installed and it's in your path.
-- Go to [Releases](./releases), open the assets, download `normalize-plex-files`.
+- Go to [Releases](https://github.com/jkeltsc/normalize-plex-files/releases), open the assets, download `normalize-plex-files`.
 - Make `normalize-plex-files` executable:
   ~~~
   chmod a+rx normalize-plex-files
