@@ -8,6 +8,8 @@ on:
 
 jobs:
   build:
+    outputs:
+      html_url: ${{ steps.draftrelease.outputs.html_url }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -29,6 +31,12 @@ jobs:
         draft: true
         artifacts: "bin/normalize-plex-files,bin/normalize-plex-files.zip"
 
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
     - uses: ncipollo/release-action@v1
       id: release
       with:
@@ -38,9 +46,9 @@ jobs:
         body: |
           # Downloadable files 
           ## Linux/UNIX-like Systems
-            - download [normalize-plex-files](${{ steps.draftrelease.outputs.html_url}}/../../download/${{ github.ref_name }}/normalize-plex-files).
+            - download [normalize-plex-files](${{ needs.build.outputs.html_url }}/../../download/${{ github.ref_name }}/normalize-plex-files).
             - make it executable: `chmod a+rx normalize-plex-files`
             - run the executable: `./normalize-plex-files`
           ## Windows-like systems
-            - download the zip archive [normalize-plex-files.zip](${{ steps.draftrelease.outputs.html_url}}/../../download/${{ github.ref_name }}/normalize-plex-files.zip).
+            - download the zip archive [normalize-plex-files.zip](${{ needs.build.outputs.html_url }}/../../download/${{ github.ref_name }}/normalize-plex-files.zip).
             - run the zip archive: `python3 normalize-plex-files.zip`
