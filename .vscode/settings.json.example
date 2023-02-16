@@ -1,6 +1,16 @@
 {
     "Prettier-SQL.keywordCase": "upper",
     "sqlite.setupDatabase": {
-       "./plex.db": {"sql": [".parameter init",".parameter set :movies_section_name \"'Filme'\"",".parameter set :series_section_name \"'Serien'\""]}
+        "./plex.db": {
+            "sql": [
+                ".parameter init",
+                ".parameter set :movies_section_name \"'Filme'\"",
+                ".parameter set :series_section_name \"'Serien'\""
+            ]
+        }
+    },
+    "files.associations": {
+        "sqlsearchmovies.py": "sqlite",
+        "sqlsearchseries.py": "sqlite"
     }
 }
