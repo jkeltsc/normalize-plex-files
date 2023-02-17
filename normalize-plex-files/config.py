@@ -55,7 +55,7 @@ def getconfig() -> SimpleNamespace:
 
     try:
         opts, args = getopt.getopt(
-            sys.argv[1:], "mb:l:s:oTB:L:S:OdD:", [
+            sys.argv[1:], "mb:l:s:oTB:L:S:OdD:r", [
                 "armed",
                 "rmdotfiles",
                 "movies",
