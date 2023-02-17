@@ -1,0 +1,33 @@
+name: make-zip
+
+on: 
+  push:
+    tags-ignore:
+    - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - name: zip source into one archive
+      run: |
+        cd ${{ github.workspace }}
+        mkdir bin
+        cd normalize-plex-files
+        zip -r ../bin/normalize-plex-files.zip *
+        cd ../bin
+        (echo '#!/usr/bin/env python3'; cat normalize-plex-files.zip)> normalize-plex-files
+        chmod a+rx normalize-plex-files
+
+    - name: save artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: normalize-plex-files
+        path: bin/normalize-plex-files
+        retention-days: 1
