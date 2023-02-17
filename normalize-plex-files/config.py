@@ -13,7 +13,8 @@ def getconfig() -> SimpleNamespace:
                 [-B seriesdir] [-L libraryname] [-S #subdirs] [-O]
 
     Arguments and Environment Variables:
-            --armed                                     run armed, default: unarmed (no files touched)
+             --armed                                     run armed, default: unarmed (no files touched)
+        -r | --rmdotfiles           PLEX_RMDOTFILES      remove dotfiles in media dirs before rmdir, env/default: {config.rmdotfiles}
         -m | --movies                                    process movie files, default: do not process movies
         -b | --moviesbase dir       PLEX_MOVIESBASE      movie files directory, env/default: {config.moviesbase}
         -l | --movieslibrary name   PLEX_MOVIESLIBRARY   movies library name, eenv/default: {config.movieslibrary}
@@ -33,6 +34,9 @@ def getconfig() -> SimpleNamespace:
 
     config.armed = False
     config.debug = False
+
+    config.rmdotfiles = os.environ.get('PLEX_RMDOTFILES', "False").lower() in ("true", "1", "yes")
+
     config.database = os.environ.get(
         'PLEX_DATABASE', '/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db')
 
@@ -40,21 +44,20 @@ def getconfig() -> SimpleNamespace:
     config.moviesbase = os.environ.get('PLEX_MOVIESBASE', '/data/plex/Filme/')
     config.movieslibrary = os.environ.get('PLEX_MOVIESLIBRARY', "Filme")
     config.moviessubdirs = abs(int(os.environ.get('PLEX_MOVIESSUBDIRS', 1)))
-    config.ownmoviefolder = os.environ.get(
-        'PLEX_OWNMOVIEFOLDER', False) == True
+    config.ownmoviefolder = os.environ.get('PLEX_OWNMOVIEFOLDER', "False").lower() in ("true", "1", "yes")
 
     config.series = False
     config.seriesbase = os.environ.get(
         'PLEX_SERIESBASE', '/data/plex/Serien/')
     config.serieslibrary = os.environ.get('PLEX_SERIESLIBRARY', "Serien")
     config.seriessubdirs = abs(int(os.environ.get('PLEX_SERIESSUBDIRS', 1)))
-    config.ownseasonfolder = os.environ.get(
-        'PLEX_OWNSEASONFOLDER', False) == True
+    config.ownseasonfolder = os.environ.get('PLEX_OWNSEASONFOLDER', "False").lower() in ("true", "1", "yes")
 
     try:
         opts, args = getopt.getopt(
             sys.argv[1:], "mb:l:s:oTB:L:S:OdD:", [
                 "armed",
+                "rmdotfiles",
                 "movies",
                 "moviesbase=",
                 "movieslibrary=",
@@ -74,6 +77,8 @@ def getconfig() -> SimpleNamespace:
     for o, a in opts:
         if o == "--armed":
             config.armed = True
+        if o in ("-r", "--rmdotfiles"):
+            config.rmdotfiles = True
 
         if o in ("-m", "--movies"):
             config.movies = True

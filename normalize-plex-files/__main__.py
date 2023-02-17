@@ -91,7 +91,7 @@ def main():
                 # old filename without extension
                 old_file = os.path.splitext(part)[0]
 
-                utils.movemedia(old_file, new_file, config.armed)
+                utils.movemedia(old_file, new_file, config)
 
 
     if config.series:
@@ -149,7 +149,7 @@ def main():
                 # old filename without extension
                 old_file = os.path.splitext(part)[0]
 
-                utils.movemedia(old_file, new_file, config.armed)
+                utils.movemedia(old_file, new_file, config)
 
 
     con.close()
