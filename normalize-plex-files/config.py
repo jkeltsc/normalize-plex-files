@@ -2,6 +2,7 @@ import getopt
 import sys
 import os
 from types import SimpleNamespace
+import json
 
 
 def getconfig() -> SimpleNamespace:
@@ -30,28 +31,87 @@ def getconfig() -> SimpleNamespace:
     """, file=sys.stderr)
         sys.exit(2)
 
-    config = SimpleNamespace()
 
-    config.armed = False
-    config.debug = False
+    forced_defaults={
+        "armed":    False,
+        "debug":    False,
+        "movies":   False,
+        "series":   False,
+    }
 
-    config.rmdotfiles = os.environ.get('PLEX_RMDOTFILES', "False").lower() in ("true", "1", "yes")
 
-    config.database = os.environ.get(
-        'PLEX_DATABASE', '/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db')
+    defaults = {
+        "rmdotfiles":       False,
+        "database":         "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db",
 
-    config.movies = False
-    config.moviesbase = os.environ.get('PLEX_MOVIESBASE', '/data/plex/Filme/')
-    config.movieslibrary = os.environ.get('PLEX_MOVIESLIBRARY', "Filme")
-    config.moviessubdirs = abs(int(os.environ.get('PLEX_MOVIESSUBDIRS', 1)))
-    config.ownmoviefolder = os.environ.get('PLEX_OWNMOVIEFOLDER', "False").lower() in ("true", "1", "yes")
+        "moviesbase":       "/data/plex/Filme/",
+        "movieslibrary":    "Filme",
+        "moviessubdirs":    1,
+        "ownmoviefolder":   "False",
 
-    config.series = False
-    config.seriesbase = os.environ.get(
-        'PLEX_SERIESBASE', '/data/plex/Serien/')
-    config.serieslibrary = os.environ.get('PLEX_SERIESLIBRARY', "Serien")
-    config.seriessubdirs = abs(int(os.environ.get('PLEX_SERIESSUBDIRS', 1)))
-    config.ownseasonfolder = os.environ.get('PLEX_OWNSEASONFOLDER', "False").lower() in ("true", "1", "yes")
+        "seriesbase":       "/data/plex/Serien/",
+        "serieslibrary":    "Serien",
+        "seriessubdirs":    1,
+        "ownseasonfolder":  False,
+    }
+
+
+    try:
+        cfg_file=os.path.expanduser("~/.plex")
+        with open(cfg_file, "r") as f:
+            config_from_file = json.load(f)
+    except FileNotFoundError as e:
+        config_from_file = {}
+        pass
+    except PermissionError as e:
+        print(e, file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(cfg_file+" contains invalid JSON:",e, file=sys.stderr)
+        sys.exit(1)
+
+
+    env_keys = {
+        "rmdotfiles":       'PLEX_RMDOTFILES',
+        "database":         'PLEX_DATABASE',
+
+        "moviesbase":       'PLEX_MOVIESBASE',
+        "movieslibrary":    'PLEX_MOVIESLIBRARY',
+        "moviessubdirs":    'PLEX_MOVIESSUBDIRS',
+        "ownmoviefolder":   'PLEX_OWNMOVIEFOLDER',
+
+        "seriesbase":       'PLEX_SERIESBASE',
+        "serieslibrary":    'PLEX_SERIESLIBRARY',
+        "seriessubdirs":    'PLEX_SERIESSUBDIRS',
+        "ownseasonfolder":  'PLEX_OWNSEASONFOLDER',
+    }
+
+
+    config = SimpleNamespace(**{
+        **defaults,
+        **config_from_file,
+        **forced_defaults,
+    })
+
+    for key, envkey in env_keys.items():
+        if envkey in os.environ:
+            config[key]=os.environ[envkey]
+
+    # normalize types
+    if config.rmdotfiles.__class__ != bool: config.rmdotfiles = str(config.rmdotfiles).lower() in ("true", "1", "yes") 
+    if config.ownmoviefolder.__class__ != bool: config.ownmoviefolder = str(config.ownmoviefolder).lower() in ("true", "1", "yes") 
+    if config.ownseasonfolder.__class__ != bool: config.ownseasonfolder = str(config.ownseasonfolder).lower() in ("true", "1", "yes") 
+    if config.seriessubdirs.__class__ != int:
+        try:
+            config.seriessubdirs = abs(int(config.seriessubdirs))
+        except:
+            config.seriessubdirs = defaults["seriessubdirs"]
+
+    if config.moviessubdirs.__class__ != int:
+        try:
+            config.moviessubdirs = abs(int(config.moviessubdirs))
+        except:
+            config.moviessubdirs = defaults["moviessubdirs"]
 
     try:
         opts, args = getopt.getopt(
@@ -87,7 +147,10 @@ def getconfig() -> SimpleNamespace:
         if o in ("-l", "--movieslibrary"):
             config.movieslibrary = a
         if o in ("-s", "--moviessubdirs"):
-            config.moviessubdirs = abs(int(a))
+            try:
+                config.moviessubdirs = abs(int(a))
+            except:
+                usage()
         if o in ("-o", "--ownmoviefolder"):
             config.ownmoviefolder = True
 
@@ -98,7 +161,10 @@ def getconfig() -> SimpleNamespace:
         if o in ("-L", "--serieslibrary"):
             config.seriesbase = a
         if o in ("-S", "--serieessubdirs"):
-            config.seriessubdirs = abs(int(a))
+            try:
+                config.seriessubdirs = abs(int(a))
+            except:
+                usage()
         if o in ("-O", "--ownseasonfolder"):
             config.ownseasonfolder = True
 
