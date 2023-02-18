@@ -16,16 +16,14 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: zip source into one archive
-      env:
-        SHA: ${{ github.sha }}
-        TAG: 
+      shell: bash
       run: |
         if 
-          [ -z "$GITHUB_REF_NAME" ]
+          [ "x$GITHUB_REF_TYPE" = xtag ]
         then
-          version="$GITHUB_SHA"
-        else
           version="$GITHUB_REF_NAME"
+        else
+          version="SHA=$GITHUB_SHA"
         fi
 
         cd "$GITHUB_WORKSPACE" || exit 1
