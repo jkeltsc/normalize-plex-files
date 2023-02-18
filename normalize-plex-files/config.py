@@ -21,7 +21,7 @@ def getconfig() -> SimpleNamespace:
     """Gets various config variables from the environment or from the commandline."""
 
     def usage(message):
-        print(f"""usage: {sys.argv[0]} {{-m [-T] | -T [-m]}} [--armed] [-d] [-D database] \\
+        print(f"""usage: {sys.argv[0]} {{ -m [-T] | -T [-m] | -v }} [--armed] [-d] [-D database] \\
             [-b moviedir] [-l libraryname] [-s #subdirs] [-o] \\
             [-B seriesdir] [-L libraryname] [-S #subdirs] [-O]
 
