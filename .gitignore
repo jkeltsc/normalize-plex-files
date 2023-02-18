@@ -6,3 +6,5 @@ databaseBackup.*
 *.db-shm
 *.db-wal
 __pycache__
+settings.json
+launch.json
