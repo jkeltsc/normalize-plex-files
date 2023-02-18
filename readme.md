@@ -12,6 +12,7 @@
   - [4.1. Retain Levels of Subdirectories](#41-retain-levels-of-subdirectories)
   - [4.2. Store Each Movie in its own Subdirectory](#42-store-each-movie-in-its-own-subdirectory)
   - [4.3. Store Each Season of a TV Show in its own Subdirectory](#43-store-each-season-of-a-tv-show-in-its-own-subdirectory)
+  - [4.4. Remove Dot-Files](#44-remove-dot-files)
 - [5. Config File](#5-config-file)
 - [6. All Commandline-Options](#6-all-commandline-options)
 - [7. Debugging](#7-debugging)
@@ -226,6 +227,19 @@ Example with `PLEX_SERIEESSBASE=/data/plex/tv-shows/` and `PLEX_OWNSEASONFOLDER=
                                                         02x02 Doctor Who - Mit Zähnen und Klauen [1920x1080].m4v
                                                         [...]
 ```
+
+## 4.4. Remove Dot-Files
+
+If during reorganization of your files a directory remains empty (because all contained movie files have been moved elsewhere), `normalize-plex-files` will try to remove the directory.
+
+This will regularly fail if your operating system has added dot-files to the directory (like `.DS_Store` or `.thumb` files). To remove empty directories anyway, `normalize-plex-files` can remove dot-files from processed media directories.
+
+This behaviour can be adjusted using variables or command line options: 
+
+| Variable        | Long&nbsp;Option&nbsp;&nbsp; | Short | Meaning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default |
+| --------------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| PLEX_RMDOTFILES | --rmdotfiles                                                                                   | -r    | Remove dot-files from processes media directories                                                                                                                                                                                                                                                                                                                                           |
+
 
 # 5. Config File
 
