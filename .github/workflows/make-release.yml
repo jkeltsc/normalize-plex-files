@@ -17,8 +17,15 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: zip source into one archive
+      shell: bash
       run: |
-        cd ${{ github.workspace }}
+        cd "$GITHUB_WORKSPACE" || exit 1
+
+        versionfile="$(cat normalize-plex-files/version.py)"
+        echo "${versionfile%VERSION=*}
+        VERSION=\"$GITHUB_REF_NAME\"
+        " >normalize-plex-files/version.py
+
         mkdir bin
         cd normalize-plex-files
         zip -r ../bin/normalize-plex-files.zip *
