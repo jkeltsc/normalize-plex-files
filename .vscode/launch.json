@@ -19,7 +19,7 @@
             "justMyCode": true
         },
         {
-            "name": "tvseries normalization",
+            "name": "tv-series normalization",
             "type": "python",
             "request": "launch",
             "program": "normalize-plex-files",
