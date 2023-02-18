@@ -233,7 +233,7 @@ Example with `PLEX_SERIEESSBASE=/data/plex/tv-shows/` and `PLEX_OWNSEASONFOLDER=
 If `~/.plex` exists, it will be read onstartup and the content interpreted as a JSON object.
 
 If it is not a JSON object, an error is thrown. Unkown attributes are ignored.
-Known attributes are displayes in the table in the next section.
+Known attributes are listed in the table in the next section.
 
 Example `~/.plex` file:
 ```JSON
@@ -247,7 +247,7 @@ Defaults:
   "rmdotfiles":       false,
   "database":         "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db",
   "moviesbase":       "/data/plex/Filme/",
-  "movieslibrary":    "Movies",
+  "movieslibrary":    "Filme",
   "moviessubdirs":    1,
   "ownmoviefolder":   false,
   "seriesbase":       "/data/plex/Serien",
