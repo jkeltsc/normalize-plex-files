@@ -58,12 +58,12 @@ The package has not been tested on Windows. Chances are good it works, though. T
 ## 3.1. Define Your Local Plex Setup
 Describe your Plex setup in environment variables. Set them as described in the table below:
 
-| Variable           | Meaning                               | Default              |
-| ------------------ | ------------------------------------- | -------------------- |
-| PLEX_MOVIESBASE    | Base directory for your movie files   | `/data/plex/Filme/`  |
-| PLEX_MOVIESLIBRARY | Name of your movies library           | Filme                |
-| PLEX_SERIEESSBASE  | Base directory for your TV show files | `/data/plex/Serien/` |
-| PLEX_SERIESLIBRARY | Name of your TV shows library         | Serien               |
+| Variable           | Meaning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| PLEX_MOVIESBASE    | Base directory for your movie files                                                                                                                                                                                                                                                                                                   | `/data/plex/Filme/`  |
+| PLEX_MOVIESLIBRARY | Name of your movies library                                                                                                                                                                                                                                                                                                           | Filme                |
+| PLEX_SERIEESSBASE  | Base directory for your TV show files                                                                                                                                                                                                                                                                                                 | `/data/plex/Serien/` |
+| PLEX_SERIESLIBRARY | Name of your TV shows library                                                                                                                                                                                                                                                                                                         | Serien               |
 
 (New to environment variables? Read this: [Linux](https://unix.stackexchange.com/questions/117467/how-to-permanently-set-environmental-variables), [Windows](https://stackoverflow.com/questions/5898131/set-a-persistent-environment-variable-from-cmd-exe)):
 
@@ -106,10 +106,10 @@ The application can retain a number of subdirectory levels. The default is to gu
 The intention is to leave manual sorting criteria untouched that you applied to your paths.
 This behaviour can be adjusted using variables or command line options: 
 
-| Variable           | Long Option      | Short | Meaning                                                      | Default |
-| ------------------ | ---------------- | ----- | ------------------------------------------------------------ | ------- |
-| PLEX_MOVIESSUBDIRS | --moviessubdirs  | -s    | Number of subdirs to leave untouched for movie libraries     | `1`     |
-| PLEX_SERIESSUBDIRS | --serieessubdirs | -S    | Number of subdirs to leave untouched for TV series libraries | `1`     |
+| Variable           | Long&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Short | Meaning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| PLEX_MOVIESSUBDIRS | --moviessubdirs                                                                                                  | -s    | Number of subdirs to leave untouched for movie libraries                                                                                                                                                                                                                        | `1`     |
+| PLEX_SERIESSUBDIRS | --serieessubdirs                                                                                                 | -S    | Number of subdirs to leave untouched for TV series libraries                                                                                                                                                                                                                    | `1`     |
 
 
 Assume your movie library is at
@@ -157,9 +157,9 @@ The intention of this option is to group together multiple media files belonging
 
 This behaviour can be adjusted using variables or command line options: 
 
-| Variable            | Long Option      | Short | Meaning                                                                                | Default |
-| ------------------- | ---------------- | ----- | -------------------------------------------------------------------------------------- | ------- |
-| PLEX_OWNMOVIEFOLDER | --ownmoviefolder | -o    | If the option is present or the variable set to `True`, individual folders are created | `False` |
+| Variable            | Long&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Short | Meaning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default |
+| ------------------- | ---------------------------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| PLEX_OWNMOVIEFOLDER | --ownmoviefolder                                                                   | -o    | If the option is present or the variable set to `True`, individual folders are created                                                                                                                                                                                                                                                                                                      | `False` |
 
 
 The effect of this option is as follows:
@@ -191,9 +191,9 @@ The application can create indiviual subdirectories per season of a TV show. The
 
 This behaviour can be adjusted using variables or command line options: 
 
-| Variable             | Long Option       | Short | Meaning                                                                                | Default |
-| -------------------- | ----------------- | ----- | -------------------------------------------------------------------------------------- | ------- |
-| PLEX_OWNSEASONFOLDER | --ownseasonfolder | -O    | If the option is present or the variable set to `True`, individual folders are created | `False` |
+| Variable             | Long&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Short | Meaning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default |
+| -------------------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| PLEX_OWNSEASONFOLDER | --ownseasonfolder                                                                              | -O    | If the option is present or the variable set to `True`, individual folders are created                                                                                                                                                                                                                                                                                                      | `False` |
 
 Example with `PLEX_SERIEESSBASE=/data/plex/tv-shows/` and `PLEX_OWNSEASONFOLDER=False`:
 ```
