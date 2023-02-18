@@ -14,7 +14,7 @@ def getconfig() -> SimpleNamespace:
             [-B seriesdir] [-L libraryname] [-S #subdirs] [-O]
 
 Arguments and Environment Variables:
-            --armed                                     run armed, default: unarmed (no files touched)
+         --armed                                     run armed, default: unarmed (no files touched)
     -r | --rmdotfiles           PLEX_RMDOTFILES      remove dotfiles in media dirs before rmdir, env/default: {config.rmdotfiles}
     -m | --movies                                    process movie files, default: do not process movies
     -b | --moviesbase dir       PLEX_MOVIESBASE      movie files directory, env/default: {config.moviesbase}
