@@ -12,13 +12,14 @@
   - [4.1. Retain Levels of Subdirectories](#41-retain-levels-of-subdirectories)
   - [4.2. Store Each Movie in its own Subdirectory](#42-store-each-movie-in-its-own-subdirectory)
   - [4.3. Store Each Season of a TV Show in its own Subdirectory](#43-store-each-season-of-a-tv-show-in-its-own-subdirectory)
-- [5. All Commandline-Options](#5-all-commandline-options)
-- [6. Debugging](#6-debugging)
-  - [6.1. Python Debugging in VS Code](#61-python-debugging-in-vs-code)
-  - [6.2. SQLite3 Debugging](#62-sqlite3-debugging)
-    - [6.2.1. SQLite3 Command Line](#621-sqlite3-command-line)
-    - [6.2.2. VS Code Formatter: Prettier-SQL](#622-vs-code-formatter-prettier-sql)
-    - [6.2.3. VS Code SQL Execution: SQLite](#623-vs-code-sql-execution-sqlite)
+- [5. Config File](#5-config-file)
+- [6. All Commandline-Options](#6-all-commandline-options)
+- [7. Debugging](#7-debugging)
+  - [7.1. Python Debugging in VS Code](#71-python-debugging-in-vs-code)
+  - [7.2. SQLite3 Debugging](#72-sqlite3-debugging)
+    - [7.2.1. SQLite3 Command Line](#721-sqlite3-command-line)
+    - [7.2.2. VS Code Formatter: Prettier-SQL](#722-vs-code-formatter-prettier-sql)
+    - [7.2.3. VS Code SQL Execution: SQLite](#723-vs-code-sql-execution-sqlite)
 
 
 # 1. Rationale
@@ -33,13 +34,13 @@ The idea is that - **after [Plex](https://app.plex.tv) has matched your files** 
 - Make sure you have `python3` installed and it's in your path.
 - Go to [Releases](https://github.com/jkeltsc/normalize-plex-files/releases), open the assets, download `normalize-plex-files`.
 - Make `normalize-plex-files` executable:
-  ~~~
+  ```Shell
   chmod a+rx normalize-plex-files
-  ~~~  
+  ```  
 - Run the application:
-  ~~~
+  ```Shell
   ./normalize-plex-files
-  ~~~  
+  ```  
 - The application will display its help text.
 
 ## 2.2. Windows
@@ -47,9 +48,9 @@ The package has not been tested on Windows. Chances are good it works, though. T
 - Make sure you have `python3` installed and it's in your path.
 - Go to [Releases](./releases), open the assets, download `normalize-plex-files.zip`.
 - Run the application:
-  ~~~
+  ```Shell
   python3 normalize-plex-files.zip
-  ~~~  
+  ```  
 - The application will display its help text.
 
 # 3. Typical Usage (Quickstart)
@@ -70,13 +71,13 @@ Describe your Plex setup in environment variables. Set them as described in the 
 ## 3.2. Preflight Checks
 Before you actually rename all your files and move them in place, you should check how `normalize-plex-files` intents to shuffle around your media files.
 - To display what `normalize-plex-files` would do to your movies library, run
-  ~~~
+  ```Shell
   normalize-plex-files -m
-  ~~~
+  ```
 - To display what `normalize-plex-files` would do to your TV shows library, run
-  ~~~
+  ```Shell
   normalize-plex-files -T
-  ~~~
+  ```
 
 ## 3.3. Reorganize Your Files
 Check these conditions:
@@ -86,17 +87,17 @@ Check these conditions:
 
 If all three are true, you may run `normalize-plex-files` in `--armed` mode to reorganize you media files:
 - To reorganize your movie files, run
-  ~~~
+  ```Shell
   normalize-plex-files -m --armed
-  ~~~
+  ```
 - To reorganize your TV show files, run
-  ~~~
+  ```Shell
   normalize-plex-files -T --armed
-  ~~~
+  ```
 - To reorganize both, your TV show files and your movie files, run
-  ~~~
+  ```Shell
   normalize-plex-files -Tm --armed
-  ~~~
+  ```
 
 # 4. Variants
 
@@ -120,7 +121,7 @@ and you distinguish between
 
 then the default of retaining one subdirectory level will perfectly match your needs. `normalize-plex-files` will name your files similar to this:
 
-~~~
+```
 /data/plex/movies/
                   mickey/
                          Casino Royale (1967) {tmdb-12208} [720x336].m4v
@@ -133,10 +134,10 @@ then the default of retaining one subdirectory level will perfectly match your n
                          Happy Hour (2015) {tmdb-354759} [1280x720] - part1.m4v
                          Happy Hour (2015) {tmdb-354759} [1280x720] - part2.m4v
                          Happy Hour (2015) {tmdb-354759} [1280x720] - part3.m4v
-~~~
+```
 
 Using `--moviessubdirs 0` would condense your media files into one directory, as shown below:
-~~~
+```
 /data/plex/movies/
                   23 (1999) {tmdb-1557} [720x592].m4v
                   Casino Royale (1967) {tmdb-12208} [720x336].m4v
@@ -147,7 +148,7 @@ Using `--moviessubdirs 0` would condense your media files into one directory, as
                   Happy Hour (2015) {tmdb-354759} [1280x720] - part2.m4v
                   Happy Hour (2015) {tmdb-354759} [1280x720] - part3.m4v
                   James Bond 007 - Casino Royale (2006) {tmdb-36557} [1280x528].m4v
-~~~
+```
 
 ## 4.2. Store Each Movie in its own Subdirectory
 The application can create indiviual subdirectories per movie. The default is to not create individual directories per movie.
@@ -163,7 +164,7 @@ This behaviour can be adjusted using variables or command line options:
 
 The effect of this option is as follows:
 
-~~~
+```
 /data/plex/movies/
                   mickey/
                          Casino Royale (1967) {tmdb-12208}/
@@ -182,7 +183,7 @@ The effect of this option is as follows:
                                                Happy Hour (2015) [1280x720] - part1.m4v
                                                Happy Hour (2015) [1280x720] - part2.m4v
                                                Happy Hour (2015) [1280x720] - part3.m4v
-~~~
+```
 
 ## 4.3. Store Each Season of a TV Show in its own Subdirectory
 
@@ -195,7 +196,7 @@ This behaviour can be adjusted using variables or command line options:
 | PLEX_OWNSEASONFOLDER | --ownseasonfolder | -O    | If the option is present or the variable set to `True`, individual folders are created | `False` |
 
 Example with `PLEX_SERIEESSBASE=/data/plex/tv-shows/` and `PLEX_OWNSEASONFOLDER=False`:
-~~~
+```
 /data/plex/tv-shows/
                     donald/
                            Doctor Who (2005) {tvdb-78804}/
@@ -207,10 +208,10 @@ Example with `PLEX_SERIEESSBASE=/data/plex/tv-shows/` and `PLEX_OWNSEASONFOLDER=
                                                02x01 Doctor Who - Die neue Erde [1920x1080].m4v
                                                02x02 Doctor Who - Mit Zähnen und Klauen [1920x1080].m4v
                                                [...]
-~~~
+```
 
 Example with `PLEX_SERIEESSBASE=/data/plex/tv-shows/` and `PLEX_OWNSEASONFOLDER=True`:
-~~~
+```
 /data/plex/tv-shows/
                     donald/
                            Doctor Who (2005) {tvdb-78804}/
@@ -224,62 +225,93 @@ Example with `PLEX_SERIEESSBASE=/data/plex/tv-shows/` and `PLEX_OWNSEASONFOLDER=
                                                         02x01 Doctor Who - Die neue Erde [1920x1080].m4v
                                                         02x02 Doctor Who - Mit Zähnen und Klauen [1920x1080].m4v
                                                         [...]
-~~~
+```
 
-# 5. All Commandline-Options
-| Category  | Long Option         | Short | Environment Variable   | Meaning                                   | Default                                                                                                                           |
-| --------- | ------------------- | ----- | ---------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| general   | `--armed`           |       |                        | run armed, do actually move files         | run unarmed (simulation only)                                                                                                     |
-| general   | `--debug`           | `-d`  |                        | print debug messages                      | do not print debug messages                                                                                                       |
-| general   | `--database`        | `-D`  | `PLEX_DATABASE`        | Path to Plex' SQLite3 database file       | `/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db` |
-| movies    | `--movies`          | `-m`  |                        | process movie library                     | don't process movie library                                                                                                       |
-| movies    | `--moviesbase`      | `-b`  | `PLEX_MOVIESBASE`      | movie files directory                     | `/data/plex/Filme/`                                                                                                               |
-| movies    | `--movieslibrary`   | `-l`  | `PLEX_MOVIESLIBRARY`   | movies library name                       | `Filme`                                                                                                                           |
-| movies    | `--moviessubdirs`   | `-s`  | `PLEX_MOVIESSUBDIRS`   | levels of subdirs to retain               | `1`                                                                                                                               |
-| movies    | `--ownmoviefolder`  | `-o`  | `PLEX_OWNMOVIEFOLDER`  | pack each movie in its own movie folder   | `False`                                                                                                                           |
-| tv-series | `--tvseries`        | `-T`  |                        | process tv series library                 | don't process tv series library                                                                                                   |
-| tv-series | `--seriesbase`      | `-B`  | `PLEX_SERIESBASE`      | tv series  directory                      | `/data/plex/Serien/`                                                                                                              |
-| tv-series | `--serieslibrary`   | `-L`  | `PLEX_SERIESLIBRARY`   | tv series library name                    | `Serien`                                                                                                                          |
-| tv-series | `--serieessubdirs`  | `-S`  | `PLEX_SERIESSUBDIRS`   | levels of subdirs to retain               | `1`                                                                                                                               |
-| tv-series | `--ownseasonfolder` | `-O`  | `PLEX_OWNSEASONFOLDER` | pack each season in its own season folder | `False`                                                                                                                           |
+# 5. Config File
 
-# 6. Debugging
+`normalize-plex-files` supports rudimentary config-file support.
+If `~/.plex` exists, it will be read onstartup and the content interpreted as a JSON object.
 
-## 6.1. Python Debugging in VS Code
+If it is not a JSON object, an error is thrown. Unkown attributes are ignored.
+Known attributes are displayes in the table in the next section.
+
+Example `~/.plex` file:
+```JSON
+{
+  "rmdotfiles":       true
+}
+```
+Defaults:
+```JSON
+{
+  "rmdotfiles":       false,
+  "database":         "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db",
+  "moviesbase":       "/data/plex/Filme/",
+  "movieslibrary":    "Movies",
+  "moviessubdirs":    1,
+  "ownmoviefolder":   false,
+  "seriesbase":       "/data/plex/Serien",
+  "serieslibrary":    "Serien",
+  "seriessubdirs":    1,
+  "ownseasonfolder":  false
+}
+```
+
+# 6. All Commandline-Options
+| Category  | Long&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Short | Environment Variable   | Cfg-File Attribute | Meaning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default                                                                                                                           |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----- | ---------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| general   | `--armed`                                                                                                                          |       |                        |                    | run armed, do actually move files                                                                                                                                                                                                                                                                                                                                                                                                     | run unarmed (simulation only)                                                                                                     |
+| general   | `--rmdotfiles`                                                                                                                     | `-r`  | `PLEX_RMDOTFILES`      | `rmdotfiles`       | allow removal of dotfiles in directories prior to directory removal                                                                                                                                                                                                                                                                                                                                                                   | do not allow removal of dotfiles                                                                                                  |
+| general   | `--debug`                                                                                                                          | `-d`  |                        |                    | print debug messages                                                                                                                                                                                                                                                                                                                                                                                                                  | do not print debug messages                                                                                                       |
+| general   | `--database`                                                                                                                       | `-D`  | `PLEX_DATABASE`        | `database`         | Path to Plex' SQLite3 database file                                                                                                                                                                                                                                                                                                                                                                                                   | `/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db` |
+| movies    | `--movies`                                                                                                                         | `-m`  |                        |                    | process movie library                                                                                                                                                                                                                                                                                                                                                                                                                 | don't process movie library                                                                                                       |
+| movies    | `--moviesbase`                                                                                                                     | `-b`  | `PLEX_MOVIESBASE`      | `moviesbase`       | movie files directory                                                                                                                                                                                                                                                                                                                                                                                                                 | `/data/plex/Filme/`                                                                                                               |
+| movies    | `--movieslibrary`                                                                                                                  | `-l`  | `PLEX_MOVIESLIBRARY`   | `movieslibrary`    | movies library name                                                                                                                                                                                                                                                                                                                                                                                                                   | `Filme`                                                                                                                           |
+| movies    | `--moviessubdirs`                                                                                                                  | `-s`  | `PLEX_MOVIESSUBDIRS`   | `moviessubdirs`    | levels of subdirs to retain                                                                                                                                                                                                                                                                                                                                                                                                           | `1`                                                                                                                               |
+| movies    | `--ownmoviefolder`                                                                                                                 | `-o`  | `PLEX_OWNMOVIEFOLDER`  | `ownmoviefolder`   | pack each movie in its own movie folder                                                                                                                                                                                                                                                                                                                                                                                               | `False`                                                                                                                           |
+| tv-series | `--tvseries`                                                                                                                       | `-T`  |                        |                    | process tv series library                                                                                                                                                                                                                                                                                                                                                                                                             | don't process tv series library                                                                                                   |
+| tv-series | `--seriesbase`                                                                                                                     | `-B`  | `PLEX_SERIESBASE`      | `seriesbase`       | tv series  directory                                                                                                                                                                                                                                                                                                                                                                                                                  | `/data/plex/Serien/`                                                                                                              |
+| tv-series | `--serieslibrary`                                                                                                                  | `-L`  | `PLEX_SERIESLIBRARY`   | `serieslibrary`    | tv series library name                                                                                                                                                                                                                                                                                                                                                                                                                | `Serien`                                                                                                                          |
+| tv-series | `--serieessubdirs`                                                                                                                 | `-S`  | `PLEX_SERIESSUBDIRS`   | `seriessubdirs`    | levels of subdirs to retain                                                                                                                                                                                                                                                                                                                                                                                                           | `1`                                                                                                                               |
+| tv-series | `--ownseasonfolder`                                                                                                                | `-O`  | `PLEX_OWNSEASONFOLDER` | `ownseasonfolder`  | pack each season in its own season folder                                                                                                                                                                                                                                                                                                                                                                                             | `False`                                                                                                                           |
+
+# 7. Debugging
+
+## 7.1. Python Debugging in VS Code
 In case you use VS Code: to start the application in the VS Code python debugger, copy `.vscode/launch.json.example` to `.vscode/launch.json` and adjust to your needs.
 
-## 6.2. SQLite3 Debugging
+## 7.2. SQLite3 Debugging
 
 The files [normalize-plex-files/sqlsearchmovies.py](./normalize-plex-files/sqlsearchmovies.py) and [normalize-plex-files/sqlsearchseries.py](./normalize-plex-files/sqlsearchseries.py) are formatted so that they are valid SQLite3 code, though at the same time being  valid python code.
 
 This means while the files can be normally imported into the python application, they can also be normally used with SQLite3 tooling.
 
-### 6.2.1. SQLite3 Command Line
+### 7.2.1. SQLite3 Command Line
 
 You can directlty process the files using the SQLite3 commandline tool.
 
 Be sure to replace the database path, movie section name and series section name with your values.
 
-~~~
+```
 % sqlite3 '/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db'
 SQLite version 3.39.5 2022-10-14 20:58:05
 Enter ".help" for usage hints.
 sqlite> .parameter set :movies_section_name "'Filme'"
 sqlite> .read normalize-plex-files/sqlsearchmovies.py
-~~~
+```
 
-~~~
+```
 % sqlite3 '/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db'
 SQLite version 3.39.5 2022-10-14 20:58:05
 Enter ".help" for usage hints.
 sqlite> .parameter set :series_section_name "'Serien'"
 sqlite> .read normalize-plex-files/sqlsearchseries.py
-~~~
+```
 
-### 6.2.2. VS Code Formatter: Prettier-SQL
+### 7.2.2. VS Code Formatter: Prettier-SQL
 [Prettier-SQL](https://marketplace.visualstudio.com/items?itemName=inferrinizzard.prettier-sql-vscode) can handle the file as SQL. However, you need to manually switch the language in VS Code to SQLite, as the automatic language detecton will recognize the file as python.
 
-### 6.2.3. VS Code SQL Execution: SQLite
+### 7.2.3. VS Code SQL Execution: SQLite
 [VS Code SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite) can execute the files within VS Code.
 However, you need to define `:movies_section_name` and `:series_section_name` named parameters, as in the SQLite Command Line example above.
 To do so, copy the `.vscode/setting.json.example` to `.vscode/setting.json` and adjust accordingly. Additionally, you need to manually switch the language in VS Code to SQLite, as the automatic language detecton will recognize the file as python.
