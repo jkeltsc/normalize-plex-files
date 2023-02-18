@@ -1,8 +1,20 @@
+"""Config Module for normalize-plex-files
+
+This module only provides the getconfig() function that reads
+configuration from
+- config file (in JSON format)
+- environment
+- command line options
+- hard coded defaults
+and returns these in a SimpleNamespace.
+"""
+
 import getopt
 import sys
 import os
 from types import SimpleNamespace
 import json
+from version import VERSION
 
 
 def getconfig() -> SimpleNamespace:
@@ -28,6 +40,7 @@ Arguments and Environment Variables:
     -O | --ownseasonfolder      PLEX_OWNSEASONFOLDER pack each season in its own season folder, env/default: {config.ownseasonfolder}
     -d | --debug                                     turn on debug messages, default: no debug messages
     -D | --database file        PLEX_DATABASE        database file, env/default: {config.database}
+    -v | --version                                   print version and exit
 
 {message}
 """, file=sys.stderr)
@@ -57,18 +70,17 @@ Arguments and Environment Variables:
 
     try:
         cfg_file = os.path.expanduser("~/.plex")
-        with open(cfg_file, "r") as f:
+        with open(cfg_file, "r", encoding='utf-8') as f:
             config_from_file = json.load(f)
         if config_from_file.__class__ != dict:
-            raise ValueError(f'Contents must be a dictionary.')
-    except FileNotFoundError as e:
+            raise ValueError('Contents must be a dictionary.')
+    except FileNotFoundError:
         config_from_file = {}
-        pass
-    except PermissionError as e:
-        print(e, file=sys.stderr)
+    except PermissionError as err:
+        print(err, file=sys.stderr)
         sys.exit(1)
-    except Exception as e:
-        print(cfg_file+" contains invalid JSON:", e, file=sys.stderr)
+    except (json.decoder.JSONDecodeError,ValueError)  as err:
+        print(cfg_file+" contains invalid JSON:", err, file=sys.stderr)
         sys.exit(1)
 
     env_keys = {
@@ -86,15 +98,17 @@ Arguments and Environment Variables:
         "ownseasonfolder":  'PLEX_OWNSEASONFOLDER',
     }
 
-    config = SimpleNamespace(**{
+    config_dict = {
         **defaults,
         **config_from_file,
         **forced_defaults,
-    })
+    }
 
     for key, envkey in env_keys.items():
         if envkey in os.environ:
-            config[key] = os.environ[envkey]
+            config_dict[key] = os.environ[envkey]
+
+    config = SimpleNamespace(**config_dict)
 
     # normalize types
     if config.rmdotfiles.__class__ != bool:
@@ -112,18 +126,18 @@ Arguments and Environment Variables:
     if config.seriessubdirs.__class__ != int:
         try:
             config.seriessubdirs = abs(int(config.seriessubdirs))
-        except:
+        except ValueError:
             config.seriessubdirs = defaults["seriessubdirs"]
 
     if config.moviessubdirs.__class__ != int:
         try:
             config.moviessubdirs = abs(int(config.moviessubdirs))
-        except:
+        except ValueError:
             config.moviessubdirs = defaults["moviessubdirs"]
 
     try:
-        opts, args = getopt.getopt(
-            sys.argv[1:], "mb:l:s:oTB:L:S:OdD:r", [
+        opts, _ = getopt.getopt(
+            sys.argv[1:], "mb:l:s:oTB:L:S:OdD:rv", [
                 "armed",
                 "rmdotfiles",
                 "movies",
@@ -157,7 +171,7 @@ Arguments and Environment Variables:
         if o in ("-s", "--moviessubdirs"):
             try:
                 config.moviessubdirs = abs(int(a))
-            except:
+            except ValueError:
                 usage(f"Argument to {o} must be of type int.")
         if o in ("-o", "--ownmoviefolder"):
             config.ownmoviefolder = True
@@ -171,7 +185,7 @@ Arguments and Environment Variables:
         if o in ("-S", "--serieessubdirs"):
             try:
                 config.seriessubdirs = abs(int(a))
-            except:
+            except ValueError:
                 usage(f"Argument to {o} must be of type int.")
         if o in ("-O", "--ownseasonfolder"):
             config.ownseasonfolder = True
@@ -180,6 +194,9 @@ Arguments and Environment Variables:
             config.debug = True
         if o in ("-D", "--database"):
             config.database = a
+        if o in ("-v", "--version"):
+            print(VERSION)
+            sys.exit(0)
 
     if not config.movies and not config.series:
         usage("Either -m or -T must be specified.")
