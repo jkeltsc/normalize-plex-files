@@ -8,37 +8,37 @@ import json
 def getconfig() -> SimpleNamespace:
     """Gets various config variables from the environment or from the commandline."""
 
-    def usage():
-        print(f"""usage: normalize-plex-files {{-m [-T] | -T [-m]}} [--armed] [-d] [-D database] \\
-                [-b moviedir] [-l libraryname] [-s #subdirs] [-o] \\
-                [-B seriesdir] [-L libraryname] [-S #subdirs] [-O]
+    def usage(message):
+        print(f"""usage: {sys.argv[0]} {{-m [-T] | -T [-m]}} [--armed] [-d] [-D database] \\
+            [-b moviedir] [-l libraryname] [-s #subdirs] [-o] \\
+            [-B seriesdir] [-L libraryname] [-S #subdirs] [-O]
 
-    Arguments and Environment Variables:
-             --armed                                     run armed, default: unarmed (no files touched)
-        -r | --rmdotfiles           PLEX_RMDOTFILES      remove dotfiles in media dirs before rmdir, env/default: {config.rmdotfiles}
-        -m | --movies                                    process movie files, default: do not process movies
-        -b | --moviesbase dir       PLEX_MOVIESBASE      movie files directory, env/default: {config.moviesbase}
-        -l | --movieslibrary name   PLEX_MOVIESLIBRARY   movies library name, eenv/default: {config.movieslibrary}
-        -s | --moviessubdirs #      PLEX_MOVIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
-        -o | --ownmoviefolder       PLEX_OWNMOVIEFOLDER  pack each movie in its own movie folder, env/default: {config.ownmoviefolder}
-        -T | --tvseries                                  process tv series, default: do not process tv series
-        -B | --seriesbase dir       PLEX_SERIESBASE      series files directory, env/default: {config.seriesbase}
-        -L | --serieslibrary name   PLEX_SERIESLIBRARY   series library name, env/default: {config.serieslibrary}
-        -S | --serieessubdirs #     PLEX_SERIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
-        -O | --ownseasonfolder      PLEX_OWNSEASONFOLDER pack each season in its own season folder, env/default: {config.ownseasonfolder}
-        -d | --debug                                     turn on debug messages, default: no debug messages
-        -D | --database file        PLEX_DATABASE        database file, env/default: {config.database}
-    """, file=sys.stderr)
+Arguments and Environment Variables:
+            --armed                                     run armed, default: unarmed (no files touched)
+    -r | --rmdotfiles           PLEX_RMDOTFILES      remove dotfiles in media dirs before rmdir, env/default: {config.rmdotfiles}
+    -m | --movies                                    process movie files, default: do not process movies
+    -b | --moviesbase dir       PLEX_MOVIESBASE      movie files directory, env/default: {config.moviesbase}
+    -l | --movieslibrary name   PLEX_MOVIESLIBRARY   movies library name, eenv/default: {config.movieslibrary}
+    -s | --moviessubdirs #      PLEX_MOVIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
+    -o | --ownmoviefolder       PLEX_OWNMOVIEFOLDER  pack each movie in its own movie folder, env/default: {config.ownmoviefolder}
+    -T | --tvseries                                  process tv series, default: do not process tv series
+    -B | --seriesbase dir       PLEX_SERIESBASE      series files directory, env/default: {config.seriesbase}
+    -L | --serieslibrary name   PLEX_SERIESLIBRARY   series library name, env/default: {config.serieslibrary}
+    -S | --serieessubdirs #     PLEX_SERIESSUBDIRS   levels of subdirs to retain, env/default: {config.moviessubdirs}
+    -O | --ownseasonfolder      PLEX_OWNSEASONFOLDER pack each season in its own season folder, env/default: {config.ownseasonfolder}
+    -d | --debug                                     turn on debug messages, default: no debug messages
+    -D | --database file        PLEX_DATABASE        database file, env/default: {config.database}
+
+{message}
+""", file=sys.stderr)
         sys.exit(2)
 
-
-    forced_defaults={
+    forced_defaults = {
         "armed":    False,
         "debug":    False,
         "movies":   False,
         "series":   False,
     }
-
 
     defaults = {
         "rmdotfiles":       False,
@@ -55,9 +55,8 @@ def getconfig() -> SimpleNamespace:
         "ownseasonfolder":  False,
     }
 
-
     try:
-        cfg_file=os.path.expanduser("~/.plex")
+        cfg_file = os.path.expanduser("~/.plex")
         with open(cfg_file, "r") as f:
             config_from_file = json.load(f)
         if config_from_file.__class__ != dict:
@@ -69,9 +68,8 @@ def getconfig() -> SimpleNamespace:
         print(e, file=sys.stderr)
         sys.exit(1)
     except Exception as e:
-        print(cfg_file+" contains invalid JSON:",e, file=sys.stderr)
+        print(cfg_file+" contains invalid JSON:", e, file=sys.stderr)
         sys.exit(1)
-
 
     env_keys = {
         "rmdotfiles":       'PLEX_RMDOTFILES',
@@ -88,7 +86,6 @@ def getconfig() -> SimpleNamespace:
         "ownseasonfolder":  'PLEX_OWNSEASONFOLDER',
     }
 
-
     config = SimpleNamespace(**{
         **defaults,
         **config_from_file,
@@ -97,12 +94,21 @@ def getconfig() -> SimpleNamespace:
 
     for key, envkey in env_keys.items():
         if envkey in os.environ:
-            config[key]=os.environ[envkey]
+            config[key] = os.environ[envkey]
 
     # normalize types
-    if config.rmdotfiles.__class__ != bool: config.rmdotfiles = str(config.rmdotfiles).lower() in ("true", "1", "yes") 
-    if config.ownmoviefolder.__class__ != bool: config.ownmoviefolder = str(config.ownmoviefolder).lower() in ("true", "1", "yes") 
-    if config.ownseasonfolder.__class__ != bool: config.ownseasonfolder = str(config.ownseasonfolder).lower() in ("true", "1", "yes") 
+    if config.rmdotfiles.__class__ != bool:
+        config.rmdotfiles = str(
+            config.rmdotfiles
+        ).lower() in ("true", "1", "yes")
+    if config.ownmoviefolder.__class__ != bool:
+        config.ownmoviefolder = str(
+            config.ownmoviefolder
+        ).lower() in ("true", "1", "yes")
+    if config.ownseasonfolder.__class__ != bool:
+        config.ownseasonfolder = str(
+            config.ownseasonfolder
+        ).lower() in ("true", "1", "yes")
     if config.seriessubdirs.__class__ != int:
         try:
             config.seriessubdirs = abs(int(config.seriessubdirs))
@@ -134,7 +140,7 @@ def getconfig() -> SimpleNamespace:
                 "database="
             ])
     except getopt.GetoptError as err:
-        usage()
+        usage(str(err)+".")
 
     for o, a in opts:
         if o == "--armed":
@@ -152,7 +158,7 @@ def getconfig() -> SimpleNamespace:
             try:
                 config.moviessubdirs = abs(int(a))
             except:
-                usage()
+                usage(f"Argument to {o} must be of type int.")
         if o in ("-o", "--ownmoviefolder"):
             config.ownmoviefolder = True
 
@@ -166,7 +172,7 @@ def getconfig() -> SimpleNamespace:
             try:
                 config.seriessubdirs = abs(int(a))
             except:
-                usage()
+                usage(f"Argument to {o} must be of type int.")
         if o in ("-O", "--ownseasonfolder"):
             config.ownseasonfolder = True
 
@@ -176,6 +182,6 @@ def getconfig() -> SimpleNamespace:
             config.database = a
 
     if not config.movies and not config.series:
-        usage()
+        usage("Either -m or -T must be specified.")
 
     return config
