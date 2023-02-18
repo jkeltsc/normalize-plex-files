@@ -60,6 +60,8 @@ def getconfig() -> SimpleNamespace:
         cfg_file=os.path.expanduser("~/.plex")
         with open(cfg_file, "r") as f:
             config_from_file = json.load(f)
+        if config_from_file.__class__ != dict:
+            raise ValueError(f'Contents must be a dictionary.')
     except FileNotFoundError as e:
         config_from_file = {}
         pass
