@@ -278,7 +278,7 @@ Defaults:
 # 7. Debugging
 
 ## 7.1. Python Debugging in VS Code
-In case you use VS Code: to start the application in the VS Code python debugger, copy `.vscode/launch.json.example` to `.vscode/launch.json` and adjust to your needs.
+In case you use VS Code: to start the application in the VS Code python debugger, adjust `.vscode/launch.json` to your needs.
 
 ## 7.2. SQLite3 Debugging
 
@@ -314,4 +314,4 @@ sqlite> .read normalize-plex-files/sqlsearchseries.py
 ### 7.2.3. VS Code SQL Execution: SQLite
 [VS Code SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite) can execute the files within VS Code.
 However, you need to define `:movies_section_name` and `:series_section_name` named parameters, as in the SQLite Command Line example above.
-To do so, copy the `.vscode/setting.json.example` to `.vscode/setting.json` and adjust accordingly. Additionally, you need to manually switch the language in VS Code to SQLite, as the automatic language detecton will recognize the file as python.
+To do so, adjust `.vscode/setting.json` accordingly. Additionally, you need to manually switch the language in VS Code to SQLite, as the automatic language detecton will recognize the file as python.
