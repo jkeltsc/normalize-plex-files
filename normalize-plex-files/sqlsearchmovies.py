@@ -26,15 +26,7 @@
 -- https://marketplace.visualstudio.com/items?itemName=inferrinizzard.prettier-sql-vscode
 --
 SELECT
-    REPLACE(
-        REPLACE(
-            REPLACE(SUBSTR(metadata_items.title, 1, 1), '.', '․') || SUBSTR(metadata_items.title, 2),
-            ':',
-            '꞉'
-        ),
-        '/',
-        '∕'
-    ) AS title,
+    metadata_items.title,
     metadata_items.year,
     metadata_items.edition_title AS edition,
     (
