@@ -26,15 +26,7 @@
 -- https://marketplace.visualstudio.com/items?itemName=inferrinizzard.prettier-sql-vscode
 --
 SELECT
-    REPLACE(
-        REPLACE(
-            REPLACE(SUBSTR(grandparent.title, 1, 1), '.', '․') || SUBSTR(grandparent.title, 2),
-            ':',
-            '꞉'
-        ),
-        '/',
-        '∕'
-    ) AS series,
+    grandparent.title AS series,
     grandparent.year,
     (
         CASE
@@ -46,15 +38,7 @@ SELECT
     ) AS db_ref,
     parent."index" AS season,
     metadata_items."index" AS episode,
-    REPLACE(
-        REPLACE(
-            REPLACE(SUBSTR(metadata_items.title, 1, 1), '.', '․') || SUBSTR(metadata_items.title, 2),
-            ':',
-            '꞉'
-        ),
-        '/',
-        '∕'
-    ) AS title,
+    metadata_items.title,
     media.width,
     media.height,
     media.files

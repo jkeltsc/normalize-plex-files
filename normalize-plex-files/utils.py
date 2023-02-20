@@ -3,7 +3,51 @@ import os
 import sys
 from pathlib import Path
 from types import SimpleNamespace
+import re
 
+
+TABLE = str.maketrans(
+    '/:<>"\|?*',
+    "∕꞉﹤﹥＂﹨｜？＊"
+)
+def sanitize_filename(filename: str) -> str:
+    """Returns a filename with certain special-characters replaced by non-special characters.
+
+    Illegal filenames on UNIX:
+    - replace «/» (slash) through «∕» (division slash)
+
+    Illegal filenames on MacOS:
+    - replace «:» (colon) through «꞉» (modifier letter colon)
+
+    Illegal filenames on Windows:
+    - replace «<» through «﹤» 
+    - replace «>» through «﹥» 
+    - replace «"» through «＂»
+    - replace «\» through «﹨» 
+    - replace «|» through «｜» 
+    - replace «?» through «？» 
+    - replace «*» through «＊» 
+
+    Conventions on UNIX:
+    - filenames starting with «.» are invisible. Hence, remove all leading dots from filenames.
+    - to give files starting with «..» or «...» a chance to retain their naming:
+      - replace "..." with "…"
+      - replace ".." with "‥"
+      before the leading dots are removed.
+    """
+
+
+
+    result=filename.translate(TABLE)
+
+    result = re.sub(r'^\.\.\.([^\.])', r'…\1', result)
+    result = re.sub(r'^\.\.([^\.])', r'‥\1', result)
+    result = re.sub(r'^\.*', r'', result)
+
+    if result == "":
+        raise ValueError
+    
+    return result
 
 def resolutionstring(height: int, width: int) -> str:
     """returns a string of the form " [{width}x{height}]".
@@ -43,17 +87,17 @@ def basedir(configuredbase: str, currentfile: str, depth: int = 1) -> str:
     base_dir = os.path.commonpath([configuredbase, currentfile])
 
     if base_dir != os.path.normpath(configuredbase):
-        raise ValueError(f'media file outside of configured base dir, file: {currentfile}, configured base dir: {configuredbase}')
+        raise ValueError(
+            f'media file outside of configured base dir, file: {currentfile}, configured base dir: {configuredbase}')
 
     # get subdir(s) up to depth {depth} below configuredbase
     relpath = os.path.relpath(os.path.dirname(currentfile), start=base_dir)
     subdirs = Path(relpath).parts[0:depth]
-    
-    return(os.path.join(base_dir, *subdirs))
+
+    return (os.path.join(base_dir, *subdirs))
 
 
-
-def movemedia(old_file:str, new_file:str, config:SimpleNamespace) -> None:
+def movemedia(old_file: str, new_file: str, config: SimpleNamespace) -> None:
     """Moves all files with basename {old_file} and arbitrary extensions
     to {new_file} retaining the extensions when {config.armed} is true.
     {old_file} must not contain an filename-extension.
@@ -68,7 +112,10 @@ def movemedia(old_file:str, new_file:str, config:SimpleNamespace) -> None:
     if old_file != new_file:
         # yes!
         if not config.armed:
-            print(f"would move: {old_file} --> {new_file}")
+            print(f"""would move:
+{old_file}
+{new_file}
+""")
         else:
             # seek all extensions of old_file (e.g. .m4v, .srt, ...)
             for file in glob.glob(glob.escape(old_file)+'.*'):
